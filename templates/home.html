@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    我的网站|首页
+{% endblock %}
+
+{% block header_extends %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block nav_home_active %}active{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1 style="text-align: center;">It's a new start...</h1>
+            <p style="text-align: center;">CM的个人博客</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h2 class="panel-title">热门阅读（近7日）</h2></div>
+                    <div class="panel-body">
+                        <ul>
+                        {% for hot_blog in hot_blogs_for_7_days %}
+                            <li><a style="font-size: 130%;" href="{% url 'blog_detail' hot_blog.id %}">{{ hot_blog.title }}({{ hot_blog.read_num_sum }})</a></li>            
+                        {% empty %}
+                            <li>昨天暂时没有热门博客</li>
+                        {% endfor %}
+                        </ul>
+                    </div>           
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">推荐阅读</h2>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            {% for recommend_blog in recommend_reading %}
+                                <li><a style="font-size: 130%" href="{% url 'blog_detail' recommend_blog.id %}">{{ recommend_blog.title }}</a></li>         
+                            {% empty %}
+                                <li>暂无推荐</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hot-data">     
+    </div>
+{% endblock %}
